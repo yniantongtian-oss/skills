@@ -41,7 +41,7 @@ npx skills@latest add mattpocock/skills
 
 ## Why These Skills Exist
 
-I built these skills as a way to fix common failure modes I see with Claude Code, Codex, and other coding agents.
+I built these skills as a way to fix common failure modes I see with coding assistants and other developer automation tools.
 
 ### #1: The Agent Didn't Do What I Want
 
