@@ -1,0 +1,30 @@
+name: Skill collection quality
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate shell scripts
+        run: |
+          bash -n scripts/link-skills.sh
+          bash -n scripts/list-skills.sh
+      - name: Check skill entry points
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          folders = sorted(path for path in Path("skills").rglob("SKILL.md") if path.is_file())
+          if not folders:
+              raise SystemExit("No skill entry points found")
+          for path in folders:
+              content = path.read_text(encoding="utf-8")
+              if not content.strip():
+                  raise SystemExit(f"Empty skill entry point: {path}")
+          print(f"Validated {len(folders)} skill entry points")
+          PY
